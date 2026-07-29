@@ -1,0 +1,9 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    container_name: api
+    restart: unless-stopped
+    ports:
+      - "5000:3000"
