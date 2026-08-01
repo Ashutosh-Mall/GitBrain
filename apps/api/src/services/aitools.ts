@@ -72,24 +72,13 @@ export const getReleventPaths = tool(
     const response = await llmTool.invoke([
       {
         role: "system",
-        content: `Return ONLY valid JSON. Rules:
-- Select the most relevant file paths from the provided Available Paths.
-- Return only paths that exist in Available Paths.
-- Do not create or modify paths.
-- If one file is enough, return one path.
-- If multiple files are required for understanding the request, return multiple paths.
-- Do not explain anything. 
-Format:
-{
-  "selectedPaths": [
-    "C:\\\\repo\\\\file.ts"
-  ]
-}
-`.trim(),
+        content:
+          `Return ONLY valid JSON. Rules:- Select the most relevant file paths from the provided Available Paths. - Return only paths that exist in Available Paths. - Do not create or modify paths. - If one file is enough, return one path. - If multiple files are required for understanding the request, return multiple paths. - Do not explain anything. Format:{ "selectedPaths": [ "C:\\\\repo\\\\file.ts"]}`.trim(),
       },
       {
         role: "user",
-        content: `User Request: ${input} Available Paths: ${JSON.stringify(filePaths, null, 2)} Choose the single most relevant file.`.trim(),
+        content:
+          `User Request: ${input} Available Paths: ${JSON.stringify(filePaths, null, 2)} Choose the single most relevant file.`.trim(),
       },
     ]);
 
