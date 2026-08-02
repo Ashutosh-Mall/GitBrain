@@ -6,7 +6,7 @@ import {
   FaFolder,
   FaFolderOpen,
 } from "react-icons/fa";
-import { type FileNode } from "../pages/sendFiles";
+import { type FileNode } from "../pages/SendFiles";
 
 interface TreeNodeProps {
   node: FileNode;

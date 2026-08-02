@@ -1,5 +1,5 @@
 import TreeNode from "./TreeNode";
-import { type FileNode } from "../pages/sendFiles";
+import { type FileNode } from "../pages/SendFiles";
 
 interface FileTreeProps {
   files: FileNode[];
