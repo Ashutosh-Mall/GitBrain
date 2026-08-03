@@ -4,7 +4,7 @@ import glassyBg from "../assets/glassy-bg.png";
 
 export default function HeroCard() {
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-md">
+    <div className="relative mx-auto aspect-square w-full max-w-md mr-5 md:mr-0">
       <div className="absolute inset-0 translate-x-12 translate-y-12 rounded-[2rem] bg-white" />
 
       <div className="absolute inset-0 translate-x-8 translate-y-8 rounded-[2rem] bg-gray-900 shadow-xl" />

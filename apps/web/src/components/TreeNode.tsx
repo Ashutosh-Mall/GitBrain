@@ -20,6 +20,7 @@ export default function TreeNode({
   onFileSelect,
 }: TreeNodeProps) {
   const [open, setOpen] = useState(true);
+
   const children = Array.isArray(node.children)
     ? node.children
     : [];
@@ -43,10 +44,16 @@ export default function TreeNode({
   };
 
   return (
-    <li className="relative">
-      <div className="flex items-center justify-between py-1">
+    <li className="relative min-w-max">
+      <div
+        className={`group flex items-center justify-between gap-2 rounded-md px-2 py-1 transition-colors ${
+          isSelected
+            ? "bg-zinc-800/70"
+            : "hover:bg-zinc-900"
+        }`}
+      >
         <div
-          className={`flex items-center gap-2 ${
+          className={`flex min-w-0 flex-1 items-center gap-2 ${
             isFolder ? "cursor-pointer" : ""
           }`}
           onClick={() => {
@@ -58,25 +65,30 @@ export default function TreeNode({
           {isFolder ? (
             <>
               {open ? (
-                <FaChevronDown className="text-xs text-gray-500" />
+                <FaChevronDown className="shrink-0 text-xs text-zinc-500" />
               ) : (
-                <FaChevronRight className="text-xs text-gray-500" />
+                <FaChevronRight className="shrink-0 text-xs text-zinc-500" />
               )}
 
               {open ? (
-                <FaFolderOpen className="text-yellow-500" />
+                <FaFolderOpen className="shrink-0 text-zinc-300" />
               ) : (
-                <FaFolder className="text-yellow-500" />
+                <FaFolder className="shrink-0 text-zinc-400" />
               )}
             </>
           ) : (
             <>
-              <span className="w-3" />
-              <FaFile className="text-gray-500" />
+              <span className="w-3 shrink-0" />
+              <FaFile className="shrink-0 text-zinc-500" />
             </>
           )}
 
-          <span>{node.name}</span>
+          <span
+            className="truncate text-xs text-zinc-200 sm:text-sm"
+            title={node.name}
+          >
+            {node.name}
+          </span>
         </div>
 
         {!isFolder && (
@@ -84,13 +96,18 @@ export default function TreeNode({
             type="checkbox"
             checked={isSelected}
             onChange={handleCheckboxChange}
-            className="h-4 w-4 cursor-pointer rounded border-gray-300"
+            className="
+              h-4 w-4 shrink-0 cursor-pointer
+              rounded border-zinc-600
+              bg-black text-white
+              focus:outline-none focus:ring-0
+            "
           />
         )}
       </div>
 
       {isFolder && open && (
-        <ul className="ml-4 border-l border-gray-300 pl-4">
+        <ul className="ml-2 border-l border-zinc-800 pl-2 sm:ml-4 sm:pl-4">
           {children.map((child) => (
             <TreeNode
               key={child.path}

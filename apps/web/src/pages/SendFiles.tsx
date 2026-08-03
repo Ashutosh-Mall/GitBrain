@@ -72,13 +72,13 @@ export default function SendFiles() {
         return `${cleanRepoPath}/${cleanFilePath}`;
       });
 
-      console.log("Selected file paths for question:", paths);
-      console.log("User question:", input);
-
-      const {data} = await axios.post("http://localhost:3000/api/github/response", {
-        input,
-        paths,
-      });
+      const {data} = await axios.post(
+        "http://localhost:3000/api/github/response",
+        {
+          input,
+          paths,
+        },
+      );
 
       const cleanResponse =
         typeof data?.data === "string"
@@ -88,9 +88,7 @@ export default function SendFiles() {
               .trim()
           : "";
 
-      setResponse(
-        cleanResponse
-      );
+      setResponse(cleanResponse);
       setShowResponse(true);
     } catch (err) {
       console.error(err);
@@ -99,37 +97,45 @@ export default function SendFiles() {
       setLoading(false);
     }
   };
-
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="mx-auto max-w-7xl">
-        <h1 className="mb-6 text-3xl font-semibold">
-          GitHub Repository Analyzer
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-black via-zinc-950 to-black text-white">
+      <div className="mx-auto max-w-7xl px-3 py-4 sm:px-4 sm:py-8">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+            GitHub Repository Analyzer
+          </h1>
+
+          <p className="mt-2 text-sm text-gray-500 sm:text-base">
+            Analyze repositories, inspect files, and ask AI-powered questions.
+          </p>
+        </div>
 
         {error && (
-          <div className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-red-600">
+          <div className="mb-4 rounded-xl border border-zinc-800 bg-zinc-950 p-4 text-gray-300 sm:mb-6">
             {error}
           </div>
         )}
 
-        <div className="flex flex-col gap-6 lg:flex-row">
-          {/* LEFT SIDE */}
-          <div className="flex-1 space-y-4">
-            <div className="rounded border bg-white p-4">
-              <form onSubmit={handleSubmit} className="flex gap-2">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+          {/* LEFT PANEL */}
+          <div className="space-y-4 sm:space-y-6">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4 shadow-2xl sm:p-5">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-3 sm:flex-row"
+              >
                 <input
                   type="text"
-                  placeholder="Enter repository URL"
+                  placeholder="https://github.com/user/repository"
                   value={repoUrl}
                   onChange={(e) => setRepoUrl(e.target.value)}
-                  className="flex-1 rounded border px-3 py-2 outline-none"
+                  className="w-full rounded-xl border border-zinc-800 bg-black px-4 py-3 text-white placeholder:text-gray-500 outline-none transition focus:border-gray-500"
                 />
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="rounded bg-black px-4 py-2 text-white hover:opacity-90 disabled:opacity-50"
+                  className="w-full rounded-xl bg-white px-5 py-3 font-medium text-black transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
                   {loading ? "Loading..." : "Load Repo"}
                 </button>
@@ -137,68 +143,96 @@ export default function SendFiles() {
             </div>
 
             {files.length > 0 && (
-              <div className="rounded border bg-white p-4">
-                <h2 className="mb-4 text-lg font-medium">
-                  Repository Structure
-                </h2>
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4 shadow-2xl sm:p-5">
+                <div className="mb-4 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold sm:text-xl">
+                    Repository Structure
+                  </h2>
 
-                <FileTree
-                  files={files}
-                  selectedFiles={selectedFiles}
-                  onFileSelect={setSelectedFiles}
-                />
+                  <span className="rounded-full border border-zinc-700 bg-black px-3 py-1 text-xs text-gray-300">
+                    {selectedFiles.length} selected
+                  </span>
+                </div>
+
+                <div className="max-h-[400px] overflow-auto rounded-xl border border-zinc-800 bg-black p-3 sm:max-h-[500px] lg:max-h-[650px]">
+                  <FileTree
+                    files={files}
+                    selectedFiles={selectedFiles}
+                    onFileSelect={setSelectedFiles}
+                  />
+                </div>
               </div>
             )}
           </div>
 
-          {/* RIGHT SIDE */}
-          <div className="flex-1 space-y-4">
-            <div className="rounded border bg-white p-4">
-              <h2 className="mb-3 text-lg font-medium">
-                Selected Files ({selectedFiles.length})
-              </h2>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4 shadow-2xl sm:p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="text-lg font-semibold sm:text-xl">
+                  Selected Files
+                </h2>
 
-              <ul className="max-h-64 overflow-y-auto space-y-1 text-sm">
-                {selectedFiles.map((file) => (
-                  <li
-                    key={file}
-                    className="rounded border bg-gray-50 px-2 py-1"
-                  >
-                    {file}
-                  </li>
-                ))}
-              </ul>
+                <span className="rounded-full border border-zinc-700 bg-black px-3 py-1 text-xs text-gray-300">
+                  {selectedFiles.length}
+                </span>
+              </div>
+
+              <div className="max-h-52 overflow-y-auto space-y-2 sm:max-h-72">
+                {selectedFiles.length > 0 ? (
+                  selectedFiles.map((file) => (
+                    <div
+                      key={file}
+                      className="break-all rounded-lg border border-zinc-800 bg-black px-3 py-2 text-sm text-gray-300"
+                    >
+                      {file}
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-lg border border-dashed border-zinc-700 p-6 text-center text-gray-500">
+                    No files selected yet
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="rounded border bg-white p-4">
-              <h2 className="mb-3 text-lg font-medium">Ask Question</h2>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4 shadow-2xl sm:p-5">
+              <h2 className="mb-4 text-lg font-semibold sm:text-xl">
+                Ask a Question
+              </h2>
 
-              <form onSubmit={handleQuestionSubmit} className="flex gap-2">
+              <form
+                onSubmit={handleQuestionSubmit}
+                className="flex flex-col gap-3"
+              >
                 <input
                   type="text"
-                  placeholder="Ask something about selected files..."
+                  placeholder="Explain the architecture, find bugs, summarize logic..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  className="flex-1 rounded border px-3 py-2 outline-none"
+                  className="w-full rounded-xl border border-zinc-800 bg-black px-4 py-3 text-white placeholder:text-gray-500 outline-none transition focus:border-gray-500"
                 />
 
                 <button
                   type="submit"
                   disabled={loading || selectedFiles.length === 0}
-                  className="rounded bg-black px-4 py-2 text-white hover:opacity-90 disabled:opacity-50"
+                  className="w-full rounded-xl bg-white px-5 py-3 font-medium text-black transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {loading ? "Asking..." : "Ask"}
+                  {loading ? "Analyzing..." : "Ask AI"}
                 </button>
               </form>
             </div>
 
             {showResponse && (
-              <div className="rounded border bg-white p-4">
-                <h2 className="mb-3 text-lg font-medium">Response</h2>
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-950/80 p-4 shadow-2xl sm:p-5">
+                <h2 className="mb-4 text-lg font-semibold sm:text-xl">
+                  AI Response
+                </h2>
 
-                <pre className="whitespace-pre-wrap rounded border bg-gray-50 p-3 text-sm">
-                  {response}
-                </pre>
+                <div className="max-h-[300px] overflow-auto rounded-xl border border-zinc-800 bg-black p-4 sm:max-h-[400px] lg:max-h-[500px]">
+                  <pre className="whitespace-pre-wrap break-words text-sm leading-6 text-gray-300 sm:leading-7">
+                    {response}
+                  </pre>
+                </div>
               </div>
             )}
           </div>
