@@ -12,19 +12,20 @@ export default function FileTree({
   selectedFiles,
   onFileSelect,
 }: FileTreeProps) {
-  console.log("Rendering FileTree with files:", files);
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
-      <ul className="space-y-1">
-        {files?.map((file) => (
-          <TreeNode
-            key={file.path}
-            node={file}
-            selectedFiles={selectedFiles}
-            onFileSelect={onFileSelect}
-          />
-        ))}
-      </ul>
+    <div className="overflow-x-auto rounded-lg border border-zinc-800 bg-black p-2 sm:p-4">
+      <div className="min-w-max">
+        <ul className="space-y-1 text-sm sm:text-base">
+          {files?.map((file) => (
+            <TreeNode
+              key={file.path}
+              node={file}
+              selectedFiles={selectedFiles}
+              onFileSelect={onFileSelect}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
   );
-} 
+}
