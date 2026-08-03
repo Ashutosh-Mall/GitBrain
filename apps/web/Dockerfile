@@ -1,4 +1,4 @@
-From node:22-alpine
+From node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -8,6 +8,11 @@ WORKDIR /app/apps/web
 RUN npm install --legacy-peer-deps
 RUN npm run build
 
-EXPOSE 5173
+From nginx:alpine
 
-CMD ["npm", "run", "dev", "--", "--host"]
+COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

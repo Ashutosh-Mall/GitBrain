@@ -5,11 +5,11 @@ import cors from "cors";
 
 const app = express();
 app.use(cors({
-  origin:"http://localhost:5173",
+  origin:"http://localhost",
   credentials:true
 }))
 app.use(express.json());
-app.use("/github", githubRouter);
+app.use("/api/github", githubRouter);
 
 const PORT = process.env.PORT || 3000;
 

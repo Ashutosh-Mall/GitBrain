@@ -31,7 +31,7 @@ export default function SendFiles() {
       setLoading(true);
       setError("");
 
-      const res = await axios.post("http://localhost:5000/github/clone", {
+      const res = await axios.post("http://localhost:3000/api/github/clone", {
         repoUrl,
       });
 
@@ -75,7 +75,7 @@ export default function SendFiles() {
       console.log("Selected file paths for question:", paths);
       console.log("User question:", input);
 
-      const {data} = await axios.post("http://localhost:5000/github/response", {
+      const {data} = await axios.post("http://localhost:3000/api/github/response", {
         input,
         paths,
       });

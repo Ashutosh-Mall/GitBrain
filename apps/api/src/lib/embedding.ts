@@ -17,6 +17,12 @@ export const getDocs = async ({ files, repoId }: { files: string[]; repoId: stri
     for (const file of files) {
       const content = await fs.readFile(file, "utf-8");
 
+
+      if (!content.trim()) {
+        console.log("Skipping empty file:", file);
+        continue;
+      }
+
       docs.push(
         new Document({
           pageContent: content,
@@ -27,6 +33,8 @@ export const getDocs = async ({ files, repoId }: { files: string[]; repoId: stri
         })
       );
     }
+
+    console.log("Docs generated:", docs.length);
 
     return docs;
   } catch (error) {

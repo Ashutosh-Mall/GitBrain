@@ -1,8 +1,8 @@
-import Home from "./pages/Home";
+import SendFiles from "./pages/SendFiles";
 export default function App() {
   return (
     <div >
-      <Home />
+      <SendFiles/>
     </div>
   );
 }

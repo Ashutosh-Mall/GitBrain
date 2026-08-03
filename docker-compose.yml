@@ -2,10 +2,29 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./apps/api/Dockerfile
+      dockerfile: apps/api/Dockerfile
     container_name: api
     env_file:
-      - ./apps/api/.env
-    restart: unless-stopped
+      - ./.env
     ports:
-      - "5000:3000"
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - gitBrain
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+    networks:
+      - gitBrain
+
+networks:
+  gitBrain:
+    driver: bridge

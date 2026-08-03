@@ -1,11 +1,10 @@
 import HeroCard from "../components/HeroCard";
 import { FiArrowRight } from "react-icons/fi";
-import FolderCard from "../components/FolderCard";
 
 export default function Home() {
   return (
     <section className="min-h-screen bg-white bg-[radial-gradient(circle,#e5e7eb_1px,transparent_1px)] bg-[size:18px_18px]">
-      {/* <div className="mx-auto flex min-h-screen max-w-7xl flex-col-reverse items-center gap-12 px-6 py-12 sm:px-8 md:flex-row md:gap-16 lg:px-12">
+      <div className="mx-auto flex min-h-screen max-w-7xl flex-col-reverse items-center gap-12 px-6 py-12 sm:px-8 md:flex-row md:gap-16 lg:px-12">
         <div className="flex w-full flex-1 flex-col justify-center">
           <span className="mb-5 w-fit rounded-full border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm">
             Built for Developers
@@ -67,8 +66,7 @@ export default function Home() {
         <div className="flex w-full flex-1 items-center justify-center">
           <HeroCard />
         </div>
-      </div> */}
-      <FolderCard/>
+      </div>
     </section>
   );
 }
