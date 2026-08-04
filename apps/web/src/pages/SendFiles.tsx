@@ -31,7 +31,7 @@ export default function SendFiles() {
       setLoading(true);
       setError("");
 
-      const res = await axios.post("http://localhost:3000/api/github/clone", {
+      const res = await axios.post("/api/github/clone", {
         repoUrl,
       });
 
@@ -73,7 +73,7 @@ export default function SendFiles() {
       });
 
       const {data} = await axios.post(
-        "http://localhost:3000/api/github/response",
+        " /api/github/response",
         {
           input,
           paths,
