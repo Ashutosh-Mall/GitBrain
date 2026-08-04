@@ -1,26 +1,30 @@
-services:
-  api:
-    image: ashutoshmall/gitbrain-api:latest
-    container_name: api
-    env_file:
-      - .env
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-    networks:
-      - gitBrain
+  services:
+    api:
+      image: ashutoshmall/gitbrain-api:latest
+      container_name: api
+      env_file:
+        - .env
+      ports:
+        - "3000:3000"
+      restart: unless-stopped
+      networks:
+        - gitBrain
 
-  web:
-    image: ashutoshmall/gitbrain-web:latest
-    container_name: web
-    depends_on:
-      - api
-    ports:
-      - "80:80"
-    restart: unless-stopped
-    networks:
-      - gitBrain
+    web:
+      image: ashutoshmall/gitbrain-web:latest
+      container_name: web
+      depends_on:
+        - api
+      ports:
+        - "80:80"
+        - "443:443"   
+      volumes:
+        - /home/ubuntu/certbot/conf:/etc/letsencrypt
+        - /home/ubuntu/certbot/www:/var/www/certbot
+      restart: unless-stopped
+      networks:
+        - gitBrain
 
-networks:
-  gitBrain:
-    driver: bridge
+  networks:
+    gitBrain:
+      driver: bridge  
