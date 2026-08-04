@@ -1,6 +1,7 @@
 import HeroCard from "../components/HeroCard";
 import {FiArrowRight} from "react-icons/fi";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -25,14 +26,14 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <button className="flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-6 py-3 font-medium text-white transition hover:-translate-y-1">
+              <Link to="/explore" className="flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-6 py-3 font-medium text-white transition hover:-translate-y-1">
                 Get Started
                 <FiArrowRight />
-              </button>
+              </Link>
 
-              <button className="rounded-xl border border-gray-300 bg-white px-6 py-3 font-medium text-gray-900 transition hover:bg-gray-100">
+              <Link to="https://github.com/Ashutosh-Mall/GitBrain.git" className="rounded-xl border border-gray-300 bg-white px-6 py-3 font-medium text-gray-900 transition hover:bg-gray-100">
                 Documentation
-              </button>
+              </Link>
             </div>
 
             <div className="mt-12 grid grid-cols-3 gap-4 sm:gap-6">

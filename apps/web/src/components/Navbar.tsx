@@ -12,8 +12,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const links = [
-    { name: "Home", icon: <FaHome />, href: "#" },
-    { name: "About", icon: <FaInfoCircle />, href: "#about" },
+    { name: "Home", icon: <FaHome />, href: "/" },
+    { name: "About", icon: <FaInfoCircle />, href: "/about" },
     { name: "Explore", icon: <FaCompass />, href: "/explore" },
     { name: "GitHub", icon: <FaGithub />, href: "https://github.com/Ashutosh-Mall/GitBrain" },
   ];

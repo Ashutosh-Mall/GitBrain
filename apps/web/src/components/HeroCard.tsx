@@ -1,6 +1,7 @@
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import glassyBg from "../assets/glassy-bg.png";
+import { Link } from "react-router-dom";
 
 export default function HeroCard() {
   return (
@@ -22,15 +23,15 @@ export default function HeroCard() {
         <div className="absolute inset-0 bg-black/10" />
 
         <div className="absolute bottom-6 left-6 right-6 flex justify-between">
-          <button className="flex items-center gap-2 rounded-xl bg-white/80 px-4 py-2 text-sm font-medium backdrop-blur-md">
+          <Link to="https://github.com/Ashutosh-Mall/GitBrain" className="flex items-center gap-2 rounded-xl bg-white/80 px-4 py-2 text-sm font-medium backdrop-blur-md">
             <FaGithub />
             GitHub
-          </button>
+          </Link>
 
-          <button className="flex items-center gap-2 rounded-xl bg-white/80 px-4 py-2 text-sm font-medium backdrop-blur-md">
+          <Link to="https://github.com/Ashutosh-Mall/GitBrain" className="flex items-center gap-2 rounded-xl bg-white/80 px-4 py-2 text-sm font-medium backdrop-blur-md">
             <FiExternalLink />
             Open
-          </button>
+          </Link>
         </div>
       </div>
     </div>
