@@ -11,6 +11,7 @@ COPY apps/api ./apps/api
 WORKDIR /app/apps/api
 
 RUN npm install --legacy-peer-deps
+# added this line to generate Prisma client before building the application
 RUN npx prisma generate
 RUN npm run build
 
