@@ -21,12 +21,19 @@ jobs:
 
       - name: Build & Push API
         run: |
-          docker build -t ashutoshmall/gitbrain-api:latest -f apps/api/Dockerfile .
+          docker build \
+            --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            -t ashutoshmall/gitbrain-api:latest \
+            -f apps/api/Dockerfile .
+
           docker push ashutoshmall/gitbrain-api:latest
 
       - name: Build & Push Web
         run: |
-          docker build -t ashutoshmall/gitbrain-web:latest -f apps/web/Dockerfile .
+          docker build \
+            -t ashutoshmall/gitbrain-web:latest \
+            -f apps/web/Dockerfile .
+
           docker push ashutoshmall/gitbrain-web:latest
 
   deploy:
@@ -42,19 +49,22 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             if [ ! -d "$HOME/GitBrain" ]; then
-              git clone https://github.com/Ashutosh-Mall/GitBrain.git $HOME/GitBrain
+              git clone https://github.com/Ashutosh-Mall/GitBrain.git "$HOME/GitBrain"
             fi
 
-            cd $HOME/GitBrain
+            cd "$HOME/GitBrain"
 
             git fetch origin
             git reset --hard origin/main
 
             cat > .env <<EOF
+            NODE_ENV=${{ secrets.NODE_ENV }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
             GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}
+            GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}
             QDRANT_URL=${{ secrets.QDRANT_URL }}
             QDRANT_API_KEY=${{ secrets.QDRANT_API_KEY }}
-            GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}
             EOF
 
             docker compose -f docker-compose.prod.yml pull
