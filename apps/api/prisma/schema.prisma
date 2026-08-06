@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String   @id @default(uuid())
+  username       String   
+  email          String   @unique
+  password       String
+  githubUsername String
+
+  profile        Profile?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Profile {
+  id                    String       @id @default(uuid())
+  userId                String       @unique
+
+  avatarUrl             String?
+  totalReps             Int          @default(0)
+  reps                  String[]     @default([])
+  totalContributions    Int          @default(0)
+  last30Contributions   Int          @default(0)
+
+  user                  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  repositories          Repository[]
+
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+}
+
+model Repository {
+  id          String    @id @default(uuid())
+  name        String
+  url         String
+  description String?
+  language    String?
+  stars       Int       @default(0)
+  forks       Int       @default(0)
+  topics      String[]  @default([])
+  isPrivate   Boolean   @default(false)
+
+  profileId   String
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([profileId, name])
+}
