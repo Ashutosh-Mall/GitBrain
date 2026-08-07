@@ -3,6 +3,15 @@ import bcrypt from "bcrypt";
 import {prisma} from "../lib/prisma.js";
 import {generateToken} from "../utils/generateToken.js";
 
+export interface user {
+  id: string;
+  username: string;
+  email: string;
+  githubUsername: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export const register = async (req: Request, res: Response) => {
   try {
     const {username, email, password, githubUsername} = req.body;
@@ -14,7 +23,7 @@ export const register = async (req: Request, res: Response) => {
       });
     }
 
-    const existingUser = await prisma.user.findFirst({
+    const existingUser: user | null = await prisma.user.findFirst({
       where: {
         email: email,
       },
@@ -51,6 +60,8 @@ export const register = async (req: Request, res: Response) => {
         },
       },
     });
+
+    
 
     const token = generateToken(user.id);
 
